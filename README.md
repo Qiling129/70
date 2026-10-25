@@ -11,3 +11,4 @@
 
 ## 部署
 待将现有 v5 网站文件导入仓库后，在 Cloudflare Workers & Pages 中连接 GitHub 仓库，配置自动部署。现有 Workers 项目是否能原址切换需在 Cloudflare 控制台确认。
+Website deployment connected to Cloudflare.
