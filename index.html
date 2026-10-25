@@ -60,6 +60,7 @@ article p a{color:var(--red);word-break:break-all}
 article p strong{font-weight:700}
 article p+p{margin-top:0}
 [hidden]{display:none!important}
+.gal-wenjiang{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;overflow:visible;scroll-snap-type:none}.gal-wenjiang img{display:block;width:100%;max-height:none;height:auto;object-fit:contain;scroll-snap-align:none}
 </style>
 <style>
 .asset-missing { min-height: 130px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; box-sizing:border-box; background:#f3f0ea; border:1px dashed #aaa; color:#625e57; font-size:13px; text-align:center; border-radius:8px; }
@@ -125,7 +126,7 @@ function imageMarkup(url){
     const id=url.slice(7), local=RESOURCE_MAP[id];
     return local ? '<img src="'+local+'" alt="项目图片">' : '<div class="asset-missing" role="note">原项目图片待补充 <small>资源编号 '+id.slice(0,8)+'</small></div>';
   }
-  return '<img src="'+url+'" alt="'+(url.includes('kunming/slide-')?'昆明共享电单车研究数据可视化图表':'项目图片')+'" loading="lazy">';
+  return '<img src="'+(url.startsWith("assets/")?"/"+url:url)+'" alt="'+(url.includes('kunming/slide-')?'昆明共享电单车研究数据可视化图表':'项目图片')+'" loading="lazy">';
 }
 
 function fmt(t){return esc(t).replace(/!\[\]\((\/_blob\/[0-9a-f]+)\)/g,'<span class="asset-missing">原项目图片待补充</span>').replace(/\[([^\]]+)\]\(\/_blob\/[0-9a-f]+\)/g,'<span class="asset-missing document-missing">$1（原 PDF 待补充）</span>').replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+|\/_blob\/[0-9a-f]+|assets\/documents\/[A-Za-z0-9._-]+)\)|(https?:\/\/[^\s<]+?)(?=[（）]|\s|$)/g,function(m,a,u,b){var h=u||b;return '<a href="'+h+'" target="_blank" rel="noopener"'+(h.indexOf("/_blob/")==0?' class="dl" data-f="'+(FN[h.slice(7)]||"file.pdf")+'"':"")+'>'+(a||h)+'</a>'})}
@@ -140,7 +141,7 @@ function route(){
   document.getElementById("jump").innerHTML=d.i.map(function(x,n){return x[0].slice(0,3)==="## "?'<button data-t="sec'+n+'">'+esc(x[0].slice(3))+'</button>':""}).join("");
   document.getElementById("list").innerHTML=d.i.map(function(x,n){
     if(x[0].slice(0,3)==="## ")return '<div class="sec" id="sec'+n+'"><h2>'+esc(x[0].slice(3))+'</h2><p>'+fmt(x[2])+'</p></div>';
-    return '<article>'+(x[3]?'<div class="gal">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">图片 '+(n+1)+'（替换为你的作品）</div>')+'<h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></article>'}).join("");
+    return '<article>'+(x[3]?'<div class="gal'+(x[0].indexOf("温江区零售药店")===0?' gal-wenjiang':'')+'">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">图片 '+(n+1)+'（替换为你的作品）</div>')+'<h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></article>'}).join("");
   window.scrollTo(0,0);
 }
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#jump button");if(!b)return;var t=document.getElementById(b.dataset.t);if(t)t.scrollIntoView({behavior:"smooth"})});
