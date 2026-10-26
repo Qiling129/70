@@ -79,6 +79,22 @@ article p+p{margin-top:0}
 #view.editorial .editorial-copy p:not(.meta){text-align:left;line-height:1.85;font-size:15px}
 #view.editorial .editorial-placeholder{min-height:320px;display:grid;place-items:center;border:1px dashed var(--line);color:var(--mut);background:var(--ph);font-size:14px}
 @media(max-width:760px){#view.editorial #list article{grid-template-columns:1fr;gap:22px}#view.editorial .editorial-copy{position:static;grid-row:1;text-align:left}#view.editorial .editorial-copy .meta{margin-bottom:12px}#view.editorial .editorial-gallery{column-gap:8px}#view.editorial .editorial-gallery img{margin-bottom:8px}#view.editorial .editorial-placeholder{min-height:180px}}
+
+/* Research & accessibility: split layout with horizontally browsable images */
+#view.research-split .wrap{max-width:1380px;padding-left:clamp(20px,3.5vw,56px);padding-right:clamp(20px,3.5vw,56px)}
+#view.research-split #list article:not(.research-section){display:grid;grid-template-columns:minmax(0,3fr) minmax(280px,2fr);gap:clamp(22px,3vw,52px);align-items:start;padding:38px 0 58px}
+#view.research-split .research-media{min-width:0}
+#view.research-split .research-media .gal{width:100%;display:flex;gap:0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:thin}
+#view.research-split .research-media .gal>img{flex:0 0 100%;width:100%;min-width:100%;height:auto;max-height:76vh;object-fit:contain;scroll-snap-align:start}
+#view.research-split .research-copy{position:sticky;top:86px;min-width:0;max-height:calc(100vh - 105px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding-right:4px}
+#view.research-split .research-copy h2{font-size:clamp(21px,2vw,30px);line-height:1.4;margin:0 0 12px}
+#view.research-split .research-copy .meta{margin:0 0 24px}
+#view.research-split .gallery-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;color:var(--mut);font-size:13px}
+#view.research-split .gallery-controls button{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:50%;width:34px;height:34px;cursor:pointer;font:inherit}
+#view.research-split .gallery-controls button:disabled{opacity:.3;cursor:default}
+#view.research-split .gallery-controls .gallery-count{font-variant-numeric:tabular-nums}
+#view.research-split .research-media .ph{min-height:250px}
+@media(max-width:760px){#view.research-split #list article:not(.research-section){grid-template-columns:1fr;gap:18px}#view.research-split .research-copy{position:static;max-height:none;overflow:visible;padding:0}#view.research-split .research-media .gal>img{max-height:65vh}#view.research-split .research-copy .meta{margin-bottom:14px}}
 </style>
 </head>
 <body>
@@ -149,11 +165,18 @@ function route(){
   if(!d){home.hidden=false;v.hidden=true;document.title="陈琪玲 70 · 个人介绍与作品集";window.scrollTo(0,0);return}
   home.hidden=true;v.hidden=false;document.title=d.t+" · 作品集";
   var editorial=(k==="cube"||k==="booklet");v.classList.toggle("editorial",editorial);
+  var researchSplit=(k==="laptop"||k==="access");v.classList.toggle("research-split",researchSplit);
   document.getElementById("vt").textContent=d.t;
   document.getElementById("h").textContent=d.t;
   document.getElementById("s").textContent=d.s;
   document.getElementById("jump").innerHTML=d.i.map(function(x,n){return x[0].slice(0,3)==="## "?'<button data-t="sec'+n+'">'+esc(x[0].slice(3))+'</button>':""}).join("");
   document.getElementById("list").innerHTML=d.i.map(function(x,n){
+    if(researchSplit && x[0].slice(0,3)!=="## "){
+      var images=x[3]||[];
+      var gallery=images.length?'<div class="gal">'+images.map(function(u){return imageMarkup(u)}).join("")+'</div>':(k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">项目图片待添加</div>');
+      var controls=images.length>1?'<div class="gallery-controls"><button type="button" class="gallery-prev" aria-label="上一张图片">‹</button><span class="gallery-count" aria-live="polite">01 / '+String(images.length).padStart(2,"0")+'</span><button type="button" class="gallery-next" aria-label="下一张图片">›</button></div>':'';
+      return '<article><div class="research-media">'+gallery+controls+'</div><div class="research-copy"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></div></article>';
+    }
     if(editorial){
       var gallery=x[3]&&x[3].length?'<div class="editorial-gallery">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':'<div class="editorial-placeholder">作品图片待添加</div>';
       return '<article class="editorial-project">'+gallery+'<div class="editorial-copy"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></div></article>';
@@ -162,6 +185,23 @@ function route(){
     return '<article>'+(x[3]?'<div class="gal'+((x[0].indexOf("温江区零售药店")===0||x[0].indexOf("安定门地铁站")===0||x[0].indexOf("百子园社区公共空间改造")===0)?' gal-wenjiang':'')+'">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">图片 '+(n+1)+'（替换为你的作品）</div>')+'<h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></article>'}).join("");
   window.scrollTo(0,0);
 }
+function updateGalleryCounter(g){
+  if(!g)return;
+  var slides=g.querySelectorAll("img"),controls=g.parentElement.querySelector(".gallery-controls");
+  if(!controls||!slides.length)return;
+  var n=Math.max(0,Math.min(slides.length-1,Math.round(g.scrollLeft/Math.max(1,g.clientWidth))));
+  controls.querySelector(".gallery-count").textContent=String(n+1).padStart(2,"0")+" / "+String(slides.length).padStart(2,"0");
+  controls.querySelector(".gallery-prev").disabled=n===0;
+  controls.querySelector(".gallery-next").disabled=n===slides.length-1;
+}
+document.addEventListener("scroll",function(e){if(e.target&&e.target.matches&&e.target.matches(".research-media .gal"))updateGalleryCounter(e.target)},true);
+document.addEventListener("click",function(e){
+  var b=e.target.closest&&e.target.closest(".gallery-controls button");if(!b)return;
+  var g=b.parentElement.parentElement.querySelector(".gal");if(!g)return;
+  var slides=g.querySelectorAll("img"),n=Math.round(g.scrollLeft/Math.max(1,g.clientWidth));
+  n=Math.max(0,Math.min(slides.length-1,n+(b.classList.contains("gallery-next")?1:-1)));
+  g.scrollTo({left:n*g.clientWidth,behavior:"smooth"});
+});
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#jump button");if(!b)return;var t=document.getElementById(b.dataset.t);if(t)t.scrollIntoView({behavior:"smooth"})});
 addEventListener("hashchange",route);route();
 </script>
