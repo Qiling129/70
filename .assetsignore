@@ -1,0 +1,5 @@
+# Exclude Git internals and development metadata from Workers static assets
+.git/
+.git/**
+.github/
+node_modules/
