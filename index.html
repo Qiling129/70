@@ -129,6 +129,12 @@ article p+p{margin-top:0}
  #view.research-split .gallery-controls button{min-width:42px;min-height:42px}
  #view.research-split .reference-groups summary{min-height:48px}
 }
+
+/* On phones, fit the gallery to the active image rather than reserving a tall blank frame */
+@media(max-width:760px){
+ #view.research-split .research-media .gal{height:auto;min-height:0;align-items:flex-start;background:#fafafa;transition:height .2s ease}
+ #view.research-split .research-media .gal>img{height:auto;max-height:none;align-self:flex-start;object-fit:contain;display:block}
+}
 </style>
 </head>
 <body>
@@ -231,6 +237,18 @@ function route(){
     return '<article>'+(x[3]?'<div class="gal'+((x[0].indexOf("温江区零售药店")===0||x[0].indexOf("安定门地铁站")===0||x[0].indexOf("百子园社区公共空间改造")===0)?' gal-wenjiang':'')+'">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">图片 '+(n+1)+'（替换为你的作品）</div>')+'<h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></article>'}).join("");
   window.scrollTo(0,0);
 }
+function fitMobileGallery(g){
+  if(!g||!window.matchMedia("(max-width:760px)").matches)return;
+  var slides=g.querySelectorAll("img");if(!slides.length)return;
+  var n=Math.max(0,Math.min(slides.length-1,Math.round(g.scrollLeft/Math.max(1,g.clientWidth))));
+  var img=slides[n];
+  var setHeight=function(){
+    if(!img.naturalWidth||!img.naturalHeight)return;
+    var width=g.clientWidth;
+    if(width>0)g.style.height=Math.round(width*img.naturalHeight/img.naturalWidth)+"px";
+  };
+  if(img.complete)setHeight();else img.addEventListener("load",setHeight,{once:true});
+}
 function updateGalleryCounter(g){
   if(!g)return;
   var slides=g.querySelectorAll("img"),controls=g.parentElement.querySelector(".gallery-controls");
@@ -239,7 +257,9 @@ function updateGalleryCounter(g){
   controls.querySelector(".gallery-count").textContent=String(n+1).padStart(2,"0")+" / "+String(slides.length).padStart(2,"0");
   controls.querySelector(".gallery-prev").disabled=n===0;
   controls.querySelector(".gallery-next").disabled=n===slides.length-1;
+  fitMobileGallery(g);
 }
+document.addEventListener("load",function(e){if(e.target&&e.target.matches&&e.target.matches(".research-media .gal img"))fitMobileGallery(e.target.parentElement)},true);
 document.addEventListener("scroll",function(e){if(e.target&&e.target.matches&&e.target.matches(".research-media .gal"))updateGalleryCounter(e.target)},true);
 document.addEventListener("click",function(e){
   var b=e.target.closest&&e.target.closest(".gallery-controls button");if(!b)return;
@@ -249,7 +269,7 @@ document.addEventListener("click",function(e){
   g.scrollTo({left:n*g.clientWidth,behavior:"smooth"});
 });
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#jump button");if(!b)return;var t=document.getElementById(b.dataset.t);if(t)t.scrollIntoView({behavior:"smooth"})});
-addEventListener("hashchange",route);route();
+addEventListener("hashchange",route);addEventListener("resize",function(){document.querySelectorAll(".research-media .gal").forEach(function(g){if(!window.matchMedia("(max-width:760px)").matches)g.style.height="";else fitMobileGallery(g)})});route();
 </script>
 </body>
 </html>
