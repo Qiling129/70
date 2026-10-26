@@ -111,6 +111,24 @@ article p+p{margin-top:0}
 #view.research-split .reference-groups .reference-content{padding:0 2px 16px;font-size:14px;line-height:1.8;white-space:pre-line;overflow-wrap:anywhere}
 #view.research-split .reference-groups a{color:var(--red)}
 @media(max-width:760px){#view.research-split #list article:not(.research-section){grid-template-columns:1fr}#view.research-split .research-media .gal{height:min(62vh,520px)}#view.research-split .research-copy{max-height:none}}
+
+/* Mobile-first reading order across portfolio sections */
+#view.research-split .research-mobile-heading{display:none}
+@media(max-width:760px){
+ #view.editorial .editorial-gallery{columns:1;column-gap:0}
+ #view.editorial .editorial-gallery img{margin-bottom:12px}
+ #view.editorial .editorial-copy{text-align:left}
+ #view.research-split #list article:not(.research-section){grid-template-columns:minmax(0,1fr);gap:14px;padding:26px 0 42px}
+ #view.research-split .research-mobile-heading{display:block;grid-row:1}
+ #view.research-split .research-mobile-heading h2{font-size:clamp(21px,5.6vw,28px);line-height:1.4;margin:0 0 8px}
+ #view.research-split .research-mobile-heading .meta{margin:0;color:var(--mut)}
+ #view.research-split .research-media{grid-row:2;width:100%;min-width:0}
+ #view.research-split .research-copy{grid-row:3;min-width:0;overflow:visible}
+ #view.research-split .research-copy>h2,#view.research-split .research-copy>.meta{display:none}
+ #view.research-split .research-media .gal{height:min(55vh,480px);touch-action:pan-x pan-y}
+ #view.research-split .gallery-controls button{min-width:42px;min-height:42px}
+ #view.research-split .reference-groups summary{min-height:48px}
+}
 </style>
 </head>
 <body>
@@ -203,7 +221,7 @@ function route(){
       var images=x[3]||[];
       var gallery=images.length?'<div class="gal">'+images.map(function(u){return imageMarkup(u)}).join("")+'</div>':(k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">项目图片待添加</div>');
       var controls=images.length>1?'<div class="gallery-controls"><button type="button" class="gallery-prev" aria-label="上一张图片">‹</button><span class="gallery-count" aria-live="polite">01 / '+String(images.length).padStart(2,"0")+'</span><button type="button" class="gallery-next" aria-label="下一张图片">›</button></div>':'';
-      return '<article><div class="research-media">'+gallery+controls+'</div><div class="research-copy"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+researchDescription(x[2],k==='access'&&x[0].indexOf('轮椅出行无障碍环境建设研究')!==-1)+'</div></article>';
+      return '<article><div class="research-mobile-heading"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'</div><div class="research-media">'+gallery+controls+'</div><div class="research-copy"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+researchDescription(x[2],k==='access'&&x[0].indexOf('轮椅出行无障碍环境建设研究')!==-1)+'</div></article>';
     }
     if(editorial){
       var gallery=x[3]&&x[3].length?'<div class="editorial-gallery">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':'<div class="editorial-placeholder">作品图片待添加</div>';
