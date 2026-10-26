@@ -141,7 +141,7 @@ function route(){
   document.getElementById("jump").innerHTML=d.i.map(function(x,n){return x[0].slice(0,3)==="## "?'<button data-t="sec'+n+'">'+esc(x[0].slice(3))+'</button>':""}).join("");
   document.getElementById("list").innerHTML=d.i.map(function(x,n){
     if(x[0].slice(0,3)==="## ")return '<div class="sec" id="sec'+n+'"><h2>'+esc(x[0].slice(3))+'</h2><p>'+fmt(x[2])+'</p></div>';
-    return '<article>'+(x[3]?'<div class="gal'+(x[0].indexOf("温江区零售药店")===0?' gal-wenjiang':'')+'">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">图片 '+(n+1)+'（替换为你的作品）</div>')+'<h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></article>'}).join("");
+    return '<article>'+(x[3]?'<div class="gal'+((x[0].indexOf("温江区零售药店")===0||x[0].indexOf("安定门地铁站")===0)?' gal-wenjiang':'')+'">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">图片 '+(n+1)+'（替换为你的作品）</div>')+'<h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></article>'}).join("");
   window.scrollTo(0,0);
 }
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#jump button");if(!b)return;var t=document.getElementById(b.dataset.t);if(t)t.scrollIntoView({behavior:"smooth"})});
