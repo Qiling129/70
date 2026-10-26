@@ -135,6 +135,19 @@ article p+p{margin-top:0}
  #view.research-split .research-media .gal{height:auto;min-height:0;align-items:flex-start;background:#fafafa;transition:height .2s ease}
  #view.research-split .research-media .gal>img{height:auto;max-height:none;align-self:flex-start;object-fit:contain;display:block}
 }
+
+/* Mapping: two-column field atlas, keeping each 1–3-image work together */
+#view.mapping-atlas .wrap{max-width:1380px;padding-left:clamp(20px,3.5vw,56px);padding-right:clamp(20px,3.5vw,56px)}
+#view.mapping-atlas #list{columns:2;column-gap:clamp(22px,3vw,52px)}
+#view.mapping-atlas #list article.mapping-work{display:inline-block;vertical-align:top;width:100%;box-sizing:border-box;break-inside:avoid;page-break-inside:avoid;margin:0 0 clamp(32px,4vw,66px);padding:0;border:0}
+#view.mapping-atlas .mapping-images{display:grid;gap:10px}
+#view.mapping-atlas .mapping-images img{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+#view.mapping-atlas .mapping-caption{padding-top:13px}
+#view.mapping-atlas .mapping-caption h2{font-size:clamp(17px,1.6vw,22px);line-height:1.45;font-weight:600;margin:0 0 5px}
+#view.mapping-atlas .mapping-caption .meta{font-size:13px;color:var(--mut);margin:0 0 7px}
+#view.mapping-atlas .mapping-caption p:not(.meta){font-size:14px;line-height:1.7;margin:0;color:var(--fg)}
+#view.mapping-atlas .mapping-placeholder{min-height:190px;display:grid;place-items:center;background:#fafafa;color:var(--mut);font-size:13px}
+@media(max-width:760px){#view.mapping-atlas #list{columns:1}#view.mapping-atlas #list article.mapping-work{margin-bottom:34px}#view.mapping-atlas .mapping-images{gap:8px}}
 </style>
 </head>
 <body>
@@ -216,7 +229,8 @@ function route(){
   var k=location.hash.slice(1),d=D[k],home=document.getElementById("home"),v=document.getElementById("view");
   if(!d){home.hidden=false;v.hidden=true;document.title="陈琪玲 70 · 个人介绍与作品集";window.scrollTo(0,0);return}
   home.hidden=true;v.hidden=false;document.title=d.t+" · 作品集";
-  var editorial=(k==="cube"||k==="booklet");v.classList.toggle("editorial",editorial);
+  var editorial=(k==="booklet");v.classList.toggle("editorial",editorial);
+  var mappingAtlas=(k==="cube");v.classList.toggle("mapping-atlas",mappingAtlas);
   var researchSplit=(k==="laptop"||k==="access");v.classList.toggle("research-split",researchSplit);
   document.getElementById("vt").textContent=d.t;
   document.getElementById("h").textContent=d.t;
@@ -228,6 +242,10 @@ function route(){
       var gallery=images.length?'<div class="gal">'+images.map(function(u){return imageMarkup(u)}).join("")+'</div>':(k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">项目图片待添加</div>');
       var controls=images.length>1?'<div class="gallery-controls"><button type="button" class="gallery-prev" aria-label="上一张图片">‹</button><span class="gallery-count" aria-live="polite">01 / '+String(images.length).padStart(2,"0")+'</span><button type="button" class="gallery-next" aria-label="下一张图片">›</button></div>':'';
       return '<article><div class="research-mobile-heading"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'</div><div class="research-media">'+gallery+controls+'</div><div class="research-copy"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+researchDescription(x[2],k==='access'&&x[0].indexOf('轮椅出行无障碍环境建设研究')!==-1)+'</div></article>';
+    }
+    if(mappingAtlas){
+      var imgs=x[3]&&x[3].length?'<div class="mapping-images">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':'<div class="mapping-placeholder">作品图片待添加</div>';
+      return '<article class="mapping-work">'+imgs+'<div class="mapping-caption"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+(x[2]?'<p>'+fmt(x[2])+'</p>':'')+'</div></article>';
     }
     if(editorial){
       var gallery=x[3]&&x[3].length?'<div class="editorial-gallery">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':'<div class="editorial-placeholder">作品图片待添加</div>';
