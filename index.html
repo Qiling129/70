@@ -66,6 +66,19 @@ article p+p{margin-top:0}
 .asset-missing { min-height: 130px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; box-sizing:border-box; background:#f3f0ea; border:1px dashed #aaa; color:#625e57; font-size:13px; text-align:center; border-radius:8px; }
 .asset-missing small {font-size:11px; opacity:.7; margin-top:8px;}
 .document-missing {display:inline-flex; min-height:0; padding:5px 9px; margin:3px 0;}
+
+/* Editorial layouts for Mapping and Zines */
+#view.editorial .wrap{max-width:1380px;padding-left:clamp(20px,3.5vw,56px);padding-right:clamp(20px,3.5vw,56px)}
+#view.editorial .wrap>h1{margin-top:26px}
+#view.editorial #list article{display:grid;grid-template-columns:minmax(0, 2.15fr) minmax(260px,1fr);gap:clamp(24px,3vw,54px);align-items:start;padding:36px 0 54px}
+#view.editorial .editorial-gallery{columns:2;column-gap:12px;min-width:0}
+#view.editorial .editorial-gallery img{display:block;width:100%;height:auto;break-inside:avoid;margin:0 0 12px;object-fit:contain}
+#view.editorial .editorial-copy{position:sticky;top:88px;text-align:center;min-width:0}
+#view.editorial .editorial-copy h2{font-size:clamp(23px,2.2vw,34px);line-height:1.35;margin:4px 0 20px;font-weight:500}
+#view.editorial .editorial-copy .meta{color:var(--mut);margin:0 0 34px;font-size:14px}
+#view.editorial .editorial-copy p:not(.meta){text-align:left;line-height:1.85;font-size:15px}
+#view.editorial .editorial-placeholder{min-height:320px;display:grid;place-items:center;border:1px dashed var(--line);color:var(--mut);background:var(--ph);font-size:14px}
+@media(max-width:760px){#view.editorial #list article{grid-template-columns:1fr;gap:22px}#view.editorial .editorial-copy{position:static;grid-row:1;text-align:left}#view.editorial .editorial-copy .meta{margin-bottom:12px}#view.editorial .editorial-gallery{column-gap:8px}#view.editorial .editorial-gallery img{margin-bottom:8px}#view.editorial .editorial-placeholder{min-height:180px}}
 </style>
 </head>
 <body>
@@ -135,11 +148,16 @@ function route(){
   var k=location.hash.slice(1),d=D[k],home=document.getElementById("home"),v=document.getElementById("view");
   if(!d){home.hidden=false;v.hidden=true;document.title="陈琪玲 70 · 个人介绍与作品集";window.scrollTo(0,0);return}
   home.hidden=true;v.hidden=false;document.title=d.t+" · 作品集";
+  var editorial=(k==="cube"||k==="booklet");v.classList.toggle("editorial",editorial);
   document.getElementById("vt").textContent=d.t;
   document.getElementById("h").textContent=d.t;
   document.getElementById("s").textContent=d.s;
   document.getElementById("jump").innerHTML=d.i.map(function(x,n){return x[0].slice(0,3)==="## "?'<button data-t="sec'+n+'">'+esc(x[0].slice(3))+'</button>':""}).join("");
   document.getElementById("list").innerHTML=d.i.map(function(x,n){
+    if(editorial){
+      var gallery=x[3]&&x[3].length?'<div class="editorial-gallery">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':'<div class="editorial-placeholder">作品图片待添加</div>';
+      return '<article class="editorial-project">'+gallery+'<div class="editorial-copy"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></div></article>';
+    }
     if(x[0].slice(0,3)==="## ")return '<div class="sec" id="sec'+n+'"><h2>'+esc(x[0].slice(3))+'</h2><p>'+fmt(x[2])+'</p></div>';
     return '<article>'+(x[3]?'<div class="gal'+((x[0].indexOf("温江区零售药店")===0||x[0].indexOf("安定门地铁站")===0||x[0].indexOf("百子园社区公共空间改造")===0)?' gal-wenjiang':'')+'">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">图片 '+(n+1)+'（替换为你的作品）</div>')+'<h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></article>'}).join("");
   window.scrollTo(0,0);
