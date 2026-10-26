@@ -95,6 +95,22 @@ article p+p{margin-top:0}
 #view.research-split .gallery-controls .gallery-count{font-variant-numeric:tabular-nums}
 #view.research-split .research-media .ph{min-height:250px}
 @media(max-width:760px){#view.research-split #list article:not(.research-section){grid-template-columns:1fr;gap:18px}#view.research-split .research-copy{position:static;max-height:none;overflow:visible;padding:0}#view.research-split .research-media .gal>img{max-height:65vh}#view.research-split .research-copy .meta{margin-bottom:14px}}
+
+#view.research-split #list article:not(.research-section){grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(22px,2.7vw,40px)}
+#view.research-split .research-media .gal{height:clamp(330px,58vh,640px);align-items:center;background:var(--ph);border-radius:4px}
+#view.research-split .research-media .gal>img{height:100%;max-height:100%;object-fit:contain;align-self:center}
+#view.research-split .research-copy{max-height:calc(100vh - 108px)}
+#view.research-split .research-copy .meta{margin-bottom:16px}
+#view.research-split .research-copy>p{line-height:1.7;font-size:15px}
+#view.research-split .reference-groups{margin-top:22px;border-top:1px solid var(--line)}
+#view.research-split .reference-groups details{border-bottom:1px solid var(--line)}
+#view.research-split .reference-groups summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;padding:12px 2px;font-size:14px;font-weight:600;list-style:none}
+#view.research-split .reference-groups summary::-webkit-details-marker{display:none}
+#view.research-split .reference-groups summary:after{content:"+";font-size:20px;font-weight:400;line-height:1}
+#view.research-split .reference-groups details[open] summary:after{content:"−"}
+#view.research-split .reference-groups .reference-content{padding:0 2px 16px;font-size:14px;line-height:1.8;white-space:pre-line;overflow-wrap:anywhere}
+#view.research-split .reference-groups a{color:var(--red)}
+@media(max-width:760px){#view.research-split #list article:not(.research-section){grid-template-columns:1fr}#view.research-split .research-media .gal{height:min(62vh,520px)}#view.research-split .research-copy{max-height:none}}
 </style>
 </head>
 <body>
@@ -159,6 +175,18 @@ function imageMarkup(url){
 }
 
 function fmt(t){return esc(t).replace(/!\[\]\((\/_blob\/[0-9a-f]+)\)/g,'<span class="asset-missing">原项目图片待补充</span>').replace(/\[([^\]]+)\]\(\/_blob\/[0-9a-f]+\)/g,'<span class="asset-missing document-missing">$1（原 PDF 待补充）</span>').replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+|\/_blob\/[0-9a-f]+|assets\/documents\/[A-Za-z0-9._-]+)\)|(https?:\/\/[^\s<]+?)(?=[（）]|\s|$)/g,function(m,a,u,b){var h=u||b;return '<a href="'+h+'" target="_blank" rel="noopener"'+(h.indexOf("/_blob/")==0?' class="dl" data-f="'+(FN[h.slice(7)]||"file.pdf")+'"':"")+'>'+(a||h)+'</a>'})}
+function researchDescription(t,groupLinks){
+  if(!groupLinks)return '<p>'+fmt(t)+'</p>';
+  var parts=t.split(/\n\n(?=\*\*[^*]+\*\*)/);
+  if(parts.length<2)return '<p>'+fmt(t)+'</p>';
+  var intro=parts.shift();
+  var groups=parts.map(function(part){
+    var match=part.match(/^\*\*([^*]+)\*\*\n?([\s\S]*)$/);
+    if(!match)return '<div class="reference-content">'+fmt(part)+'</div>';
+    return '<details><summary>'+esc(match[1])+'</summary><div class="reference-content">'+fmt(match[2])+'</div></details>';
+  }).join("");
+  return '<p>'+fmt(intro)+'</p><div class="reference-groups">'+groups+'</div>';
+}
 function esc(x){return String(x).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
 function route(){
   var k=location.hash.slice(1),d=D[k],home=document.getElementById("home"),v=document.getElementById("view");
@@ -175,7 +203,7 @@ function route(){
       var images=x[3]||[];
       var gallery=images.length?'<div class="gal">'+images.map(function(u){return imageMarkup(u)}).join("")+'</div>':(k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">项目图片待添加</div>');
       var controls=images.length>1?'<div class="gallery-controls"><button type="button" class="gallery-prev" aria-label="上一张图片">‹</button><span class="gallery-count" aria-live="polite">01 / '+String(images.length).padStart(2,"0")+'</span><button type="button" class="gallery-next" aria-label="下一张图片">›</button></div>':'';
-      return '<article><div class="research-media">'+gallery+controls+'</div><div class="research-copy"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></div></article>';
+      return '<article><div class="research-media">'+gallery+controls+'</div><div class="research-copy"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+researchDescription(x[2],k==='access'&&x[0].indexOf('轮椅出行无障碍环境建设研究')!==-1)+'</div></article>';
     }
     if(editorial){
       var gallery=x[3]&&x[3].length?'<div class="editorial-gallery">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':'<div class="editorial-placeholder">作品图片待添加</div>';
