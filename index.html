@@ -232,6 +232,14 @@ article p+p{margin-top:0}
 .zine-media .gallery-controls{display:flex;align-items:center;justify-content:space-between;margin-top:14px;font-size:13px;color:var(--mut)}
 .zine-media .gallery-controls button{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--fg);font-size:24px;cursor:pointer}
 @media(max-width:760px){.zine-physical img{height:auto;max-height:520px}.zine-gallery img{max-height:none}}
+
+/* One book, one gallery: physical photograph followed by original pages */
+.zine-gallery img{height:620px;max-height:70vh;align-self:center;object-fit:contain}
+.zine-thumbs{display:flex;gap:9px;overflow-x:auto;padding:14px 0 8px}
+.zine-thumbs button{flex:0 0 50px;height:58px;padding:3px;border:1px solid transparent;background:transparent;cursor:pointer}
+.zine-thumbs button[aria-pressed="true"]{border-color:var(--red)}
+.zine-thumbs img{display:block;width:100%;height:100%;object-fit:contain}
+@media(max-width:760px){.zine-gallery img{height:480px;max-height:65vh}.zine-thumbs button{flex-basis:44px;height:52px}}
 </style>
 </head>
 <body>
@@ -344,8 +352,8 @@ function route(){
       return '<article class="mapping-work'+(compactMapping?' mapping-compact':'')+'">'+imgs+'<div class="mapping-caption"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+(x[2]?'<p>'+fmt(x[2])+'</p>':'')+'</div></article>';
     }
     if(editorial && x[0]==="沙河观鸟｜业余散步"){
-      var pages=x[3].slice(1);
-      return '<article class="editorial-project"><div class="zine-media"><div class="zine-physical">'+imageMarkup(x[3][0])+'</div><p class="zine-hint">内页 · 左右滑动翻阅</p><div class="gal zine-gallery" aria-label="沙河观鸟内页">'+pages.map(function(u){return imageMarkup(u)}).join("")+'</div><div class="gallery-controls"><button type="button" class="gallery-prev" aria-label="上一页">‹</button><span class="gallery-count" aria-live="polite">01 / 10</span><button type="button" class="gallery-next" aria-label="下一页">›</button></div></div><div class="editorial-copy"><h2>'+esc(x[0])+'</h2><p class="meta">'+esc(x[1])+' · 独立创作</p><p>'+fmt(x[2])+'</p></div></article>';
+      var pages=x[3];
+      return '<article class="editorial-project"><div class="zine-media"><div class="gal zine-gallery" aria-label="沙河观鸟实体照及内页">'+pages.map(function(u){return imageMarkup(u)}).join("")+'</div><div class="gallery-controls"><button type="button" class="gallery-prev" aria-label="上一页">‹</button><span class="gallery-count" aria-live="polite">01 / '+String(pages.length).padStart(2,"0")+'</span><button type="button" class="gallery-next" aria-label="下一页">›</button></div><div class="zine-thumbs" aria-label="选择实体照或内页">'+pages.map(function(u,j){return '<button type="button" data-slide="'+j+'" aria-label="'+(j===0?'实体照':'第 '+j+' 页')+'" aria-pressed="'+(j===0?'true':'false')+'">'+imageMarkup(u)+'</button>'}).join("")+'</div></div><div class="editorial-copy"><h2>'+esc(x[0])+'</h2><p class="meta">'+esc(x[1])+' · 独立创作</p><p>'+fmt(x[2])+'</p></div></article>';
     }
     if(editorial){
       var gallery=x[3]&&x[3].length?'<div class="editorial-gallery">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':'<div class="editorial-placeholder">作品图片待添加</div>';
@@ -372,6 +380,8 @@ function updateGalleryCounter(g){
   var slides=g.querySelectorAll("img"),controls=g.parentElement.querySelector(".gallery-controls");
   if(!controls||!slides.length)return;
   var n=Math.max(0,Math.min(slides.length-1,Math.round(g.scrollLeft/Math.max(1,g.clientWidth))));
+  var thumbs=g.parentElement.querySelectorAll(".zine-thumbs button");
+  thumbs.forEach(function(b,i){b.setAttribute("aria-pressed",i===n?"true":"false")});
   controls.querySelector(".gallery-count").textContent=String(n+1).padStart(2,"0")+" / "+String(slides.length).padStart(2,"0");
   controls.querySelector(".gallery-prev").disabled=n===0;
   controls.querySelector(".gallery-next").disabled=n===slides.length-1;
@@ -395,6 +405,11 @@ document.addEventListener("click",function(e){
   group.querySelectorAll(".mapping-thumb").forEach(function(b){b.setAttribute("aria-pressed",b===thumb?"true":"false")});
 });
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#jump button");if(!b)return;var t=document.getElementById(b.dataset.t);if(t)t.scrollIntoView({behavior:"smooth"})});
+document.addEventListener("click",function(e){
+ var b=e.target.closest&&e.target.closest(".zine-thumbs button");if(!b)return;
+ var g=b.closest(".zine-media").querySelector(".zine-gallery");
+ g.scrollTo({left:Number(b.dataset.slide)*g.clientWidth,behavior:"smooth"});
+});
 addEventListener("hashchange",route);addEventListener("resize",function(){document.querySelectorAll(".research-media .gal").forEach(function(g){if(!window.matchMedia("(max-width:760px)").matches)g.style.height="";else fitMobileGallery(g)})});route();
 </script>
 </body>
