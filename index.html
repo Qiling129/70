@@ -66,6 +66,88 @@ article p+p{margin-top:0}
 .asset-missing { min-height: 130px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; box-sizing:border-box; background:#f3f0ea; border:1px dashed #aaa; color:#625e57; font-size:13px; text-align:center; border-radius:8px; }
 .asset-missing small {font-size:11px; opacity:.7; margin-top:8px;}
 .document-missing {display:inline-flex; min-height:0; padding:5px 9px; margin:3px 0;}
+
+/* Editorial layouts for Mapping and Zines */
+#view.editorial .wrap{max-width:1380px;padding-left:clamp(20px,3.5vw,56px);padding-right:clamp(20px,3.5vw,56px)}
+#view.editorial .wrap>h1{margin-top:26px}
+#view.editorial #list article{display:grid;grid-template-columns:minmax(0, 2.15fr) minmax(260px,1fr);gap:clamp(24px,3vw,54px);align-items:start;padding:36px 0 54px}
+#view.editorial .editorial-gallery{columns:2;column-gap:12px;min-width:0}
+#view.editorial .editorial-gallery img{display:block;width:100%;height:auto;break-inside:avoid;margin:0 0 12px;object-fit:contain}
+#view.editorial .editorial-copy{position:sticky;top:88px;text-align:center;min-width:0}
+#view.editorial .editorial-copy h2{font-size:clamp(23px,2.2vw,34px);line-height:1.35;margin:4px 0 20px;font-weight:500}
+#view.editorial .editorial-copy .meta{color:var(--mut);margin:0 0 34px;font-size:14px}
+#view.editorial .editorial-copy p:not(.meta){text-align:left;line-height:1.85;font-size:15px}
+#view.editorial .editorial-placeholder{min-height:320px;display:grid;place-items:center;border:1px dashed var(--line);color:var(--mut);background:var(--ph);font-size:14px}
+@media(max-width:760px){#view.editorial #list article{grid-template-columns:1fr;gap:22px}#view.editorial .editorial-copy{position:static;grid-row:1;text-align:left}#view.editorial .editorial-copy .meta{margin-bottom:12px}#view.editorial .editorial-gallery{column-gap:8px}#view.editorial .editorial-gallery img{margin-bottom:8px}#view.editorial .editorial-placeholder{min-height:180px}}
+
+/* Research & accessibility: split layout with horizontally browsable images */
+#view.research-split .wrap{max-width:1380px;padding-left:clamp(20px,3.5vw,56px);padding-right:clamp(20px,3.5vw,56px)}
+#view.research-split #list article:not(.research-section){display:grid;grid-template-columns:minmax(0,3fr) minmax(280px,2fr);gap:clamp(22px,3vw,52px);align-items:start;padding:38px 0 58px}
+#view.research-split .research-media{min-width:0}
+#view.research-split .research-media .gal{width:100%;display:flex;gap:0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:thin}
+#view.research-split .research-media .gal>img{flex:0 0 100%;width:100%;min-width:100%;height:auto;max-height:76vh;object-fit:contain;scroll-snap-align:start}
+#view.research-split .research-copy{position:sticky;top:86px;min-width:0;max-height:calc(100vh - 105px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding-right:4px}
+#view.research-split .research-copy h2{font-size:clamp(21px,2vw,30px);line-height:1.4;margin:0 0 12px}
+#view.research-split .research-copy .meta{margin:0 0 24px}
+#view.research-split .gallery-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;color:var(--mut);font-size:13px}
+#view.research-split .gallery-controls button{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:50%;width:34px;height:34px;cursor:pointer;font:inherit}
+#view.research-split .gallery-controls button:disabled{opacity:.3;cursor:default}
+#view.research-split .gallery-controls .gallery-count{font-variant-numeric:tabular-nums}
+#view.research-split .research-media .ph{min-height:250px}
+@media(max-width:760px){#view.research-split #list article:not(.research-section){grid-template-columns:1fr;gap:18px}#view.research-split .research-copy{position:static;max-height:none;overflow:visible;padding:0}#view.research-split .research-media .gal>img{max-height:65vh}#view.research-split .research-copy .meta{margin-bottom:14px}}
+
+#view.research-split #list article:not(.research-section){grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(22px,2.7vw,40px)}
+#view.research-split .research-media .gal{height:clamp(330px,58vh,640px);align-items:center;background:#fafafa;border-radius:4px}
+#view.research-split .research-media .gal>img{height:100%;max-height:100%;object-fit:contain;align-self:center}
+#view.research-split .research-copy{max-height:calc(100vh - 108px)}
+#view.research-split .research-copy .meta{margin-bottom:16px}
+#view.research-split .research-copy>p{line-height:1.7;font-size:15px}
+#view.research-split .reference-groups{margin-top:22px;border-top:1px solid var(--line)}
+#view.research-split .reference-groups details{border-bottom:1px solid var(--line)}
+#view.research-split .reference-groups summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;padding:12px 2px;font-size:14px;font-weight:600;list-style:none}
+#view.research-split .reference-groups summary::-webkit-details-marker{display:none}
+#view.research-split .reference-groups summary:after{content:"+";font-size:20px;font-weight:400;line-height:1}
+#view.research-split .reference-groups details[open] summary:after{content:"−"}
+#view.research-split .reference-groups .reference-content{padding:0 2px 16px;font-size:14px;line-height:1.8;white-space:pre-line;overflow-wrap:anywhere}
+#view.research-split .reference-groups a{color:var(--red)}
+@media(max-width:760px){#view.research-split #list article:not(.research-section){grid-template-columns:1fr}#view.research-split .research-media .gal{height:min(62vh,520px)}#view.research-split .research-copy{max-height:none}}
+
+/* Mobile-first reading order across portfolio sections */
+#view.research-split .research-mobile-heading{display:none}
+@media(max-width:760px){
+ #view.editorial .editorial-gallery{columns:1;column-gap:0}
+ #view.editorial .editorial-gallery img{margin-bottom:12px}
+ #view.editorial .editorial-copy{text-align:left}
+ #view.research-split #list article:not(.research-section){grid-template-columns:minmax(0,1fr);gap:14px;padding:26px 0 42px}
+ #view.research-split .research-mobile-heading{display:block;grid-row:1}
+ #view.research-split .research-mobile-heading h2{font-size:clamp(21px,5.6vw,28px);line-height:1.4;margin:0 0 8px}
+ #view.research-split .research-mobile-heading .meta{margin:0;color:var(--mut)}
+ #view.research-split .research-media{grid-row:2;width:100%;min-width:0}
+ #view.research-split .research-copy{grid-row:3;min-width:0;overflow:visible}
+ #view.research-split .research-copy>h2,#view.research-split .research-copy>.meta{display:none}
+ #view.research-split .research-media .gal{height:min(55vh,480px);touch-action:pan-x pan-y}
+ #view.research-split .gallery-controls button{min-width:42px;min-height:42px}
+ #view.research-split .reference-groups summary{min-height:48px}
+}
+
+/* On phones, fit the gallery to the active image rather than reserving a tall blank frame */
+@media(max-width:760px){
+ #view.research-split .research-media .gal{height:auto;min-height:0;align-items:flex-start;background:#fafafa;transition:height .2s ease}
+ #view.research-split .research-media .gal>img{height:auto;max-height:none;align-self:flex-start;object-fit:contain;display:block}
+}
+
+/* Mapping: two-column field atlas, keeping each 1–3-image work together */
+#view.mapping-atlas .wrap{max-width:1380px;padding-left:clamp(20px,3.5vw,56px);padding-right:clamp(20px,3.5vw,56px)}
+#view.mapping-atlas #list{columns:2;column-gap:clamp(22px,3vw,52px)}
+#view.mapping-atlas #list article.mapping-work{display:inline-block;vertical-align:top;width:100%;box-sizing:border-box;break-inside:avoid;page-break-inside:avoid;margin:0 0 clamp(32px,4vw,66px);padding:0;border:0}
+#view.mapping-atlas .mapping-images{display:grid;gap:10px}
+#view.mapping-atlas .mapping-images img{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+#view.mapping-atlas .mapping-caption{padding-top:13px}
+#view.mapping-atlas .mapping-caption h2{font-size:clamp(17px,1.6vw,22px);line-height:1.45;font-weight:600;margin:0 0 5px}
+#view.mapping-atlas .mapping-caption .meta{font-size:13px;color:var(--mut);margin:0 0 7px}
+#view.mapping-atlas .mapping-caption p:not(.meta){font-size:14px;line-height:1.7;margin:0;color:var(--fg)}
+#view.mapping-atlas .mapping-placeholder{min-height:190px;display:grid;place-items:center;background:#fafafa;color:var(--mut);font-size:13px}
+@media(max-width:760px){#view.mapping-atlas #list{columns:1}#view.mapping-atlas #list article.mapping-work{margin-bottom:34px}#view.mapping-atlas .mapping-images{gap:8px}}
 </style>
 </head>
 <body>
@@ -109,11 +191,11 @@ article p+p{margin-top:0}
 var FN={"de128bcb824b1a9940aac6748764a4e1":"共享电单车对城市居民生活方式的影响以及对城市绿色出行的作用研究.pdf","33dbac6a7a3066184d470cedee9e63db":"轮椅出行项目报告.pdf","6187a77d909c381943f02fce04d67e4c":"城市道路无障碍环境轮椅使用者出行偏好与适应性道路改善策略研究.pdf"};
 var P=function(a,b,c,d){return[a,b,c,d]};
 var D={
- cube:{t:"信息图解 Mapping",s:"一句话介绍这个分类。",i:[P("项目名称一","2025 · 角色","这里写项目背景、你做了什么、结果如何。两三句话就够。"),P("项目名称二","2024 · 角色","这里写项目简介。"),P("项目名称三","2023 · 角色","这里写项目简介。")]},
+ cube:{t:"信息图解 Mapping",s:"从日常观察出发，用图解记录街头物件与城市生活中的巧思。",i:[P("鸟上座","2025 · 成都","",["assets/images/bird-seat-illustration.webp","assets/images/bird-seat-photo.webp"]),P("自发的灭烟处","2025 · 深圳","",["assets/images/spontaneous-ashtray-illustration.webp","assets/images/spontaneous-ashtray-reference.webp"]),P("朋友 Nikki 家客厅","2025 · 北京","",["assets/images/nikki-living-room.webp"]),P("电风扇冬天干点什么？","2025 · 武汉","",["assets/images/fan-winter-wuhan-photo.webp","assets/images/fan-winter-wuhan-process.webp","assets/images/fan-winter-wuhan-poster.webp"]),P("真功夫","2025 · 武汉","",["assets/images/zhengongfu-wuhan-illustration.webp","assets/images/zhengongfu-wuhan-comic.webp"]),P("四块广告牌","2025 · 武汉","",["assets/images/four-billboards-wuhan-illustration.webp","assets/images/four-billboards-wuhan-comic.webp","assets/images/four-billboards-wuhan-photo.webp"]),P("雨伞晴天干点什么？","2025 · 武汉","",["assets/images/umbrella-sunny-wuhan-photo.webp","assets/images/umbrella-sunny-wuhan-diagram.webp","assets/images/umbrella-sunny-wuhan-poster.webp"]),P("相亲景观社会学","2025 · 武汉","",["assets/images/matchmaking-landscape-wuhan-photo.webp","assets/images/matchmaking-landscape-wuhan-illustration.webp"]),P("用街道围栏摆摊","2025 · 北京","",["assets/images/street-fence-stall-beijing-photo.webp","assets/images/street-fence-stall-beijing-illustration.webp","assets/images/street-fence-stall-beijing-process.webp"]),P("梅花的无障碍单间","2025 · 北京","",["assets/images/mei-accessible-room-overview.webp","assets/images/mei-accessible-room-bathroom.webp","assets/images/mei-accessible-room-bedroom.webp"]),P("居民楼里的极小农场","2024–2025 · 北京","",["assets/images/micro-farm-photo-01.webp","assets/images/micro-farm-photo-02.webp","assets/images/micro-farm-photo-03.webp","assets/images/micro-farm-photo-04.webp","assets/images/micro-farm-2.webp","assets/images/micro-farm-1.webp","assets/images/micro-farm-3.webp"]),P("住进济州岛船屋","2025 · 济州岛","",["assets/images/jeju-boat-house-cover.webp","assets/images/jeju-boat-house-annotated.webp","assets/images/jeju-boat-house-sketch.webp","assets/images/jeju-boat-house-photos.webp"]),P("济州岛18偶来小路上的小屋","2025 · 济州岛","",["assets/images/jeju-olle18-house-cover.webp","assets/images/jeju-olle18-house-illustration.webp","assets/images/jeju-olle18-house-book.webp","assets/images/jeju-olle18-house-photos.webp","assets/images/jeju-olle18-house-details.webp"]),P("香港社会企业咖啡馆 The Nest","2025 · 香港","",["assets/images/the-nest/page-01.webp","assets/images/the-nest/page-02.webp","assets/images/the-nest/page-03.webp"]),P("不在场的在场看展","2025 · 北京","",["assets/images/presence-of-absence-exhibition.webp"]),P("丰街礼物，站前街漫游（地图）","2025 · 北京","",["assets/images/fengtai-station-walk-map.webp"]),P("两位建筑师的出租屋","2025 · 北京","",["assets/images/architects-rental/page-01.webp","assets/images/architects-rental/page-02.webp","assets/images/architects-rental/page-03.webp","assets/images/architects-rental/page-04.webp","assets/images/architects-rental/page-05.webp"]),P("街边长出一棵厨房？","2025 · 武汉","", ["assets/images/street-kitchen/page-01.webp","assets/images/street-kitchen/page-02.webp","assets/images/street-kitchen/page-03.webp","assets/images/street-kitchen/page-04.webp","assets/images/street-kitchen/page-05.webp","assets/images/street-kitchen/page-06.webp"]),P("植物散步","2025 · 北京","",["assets/images/plant-walk.webp"]),P("Fujirock的苦","2025 · 苗场","",["assets/images/fujirock-hardship-1.webp","assets/images/fujirock-hardship-2.webp","assets/images/fujirock-hardship-3.webp","assets/images/fujirock-hardship-4.webp"]),P("吃吃的家庭工作室","2025 · 北京","",["assets/images/chichi-home-studio.webp"]),P("你和我音乐节3rd","2025 · 北京","",["assets/images/you-and-me-festival-3.webp"]),P("北京胡同loft基本款","2025 · 北京","",["assets/images/beijing-hutong-loft.webp"]),P("夏日骑行帽","2025 · 北京","",["assets/images/summer-cycling-hat/summer-cycling-hat-cover.webp","assets/images/summer-cycling-hat/summer-cycling-hat-steps.webp","assets/images/summer-cycling-hat/summer-cycling-hat-photo.webp"]),P("70的北京生活附近观察","2022–2025 · 北京","", ["assets/images/beijing-nearby/page-01.webp","assets/images/beijing-nearby/page-02.webp","assets/images/beijing-nearby/page-03.webp","assets/images/beijing-nearby/page-04.webp","assets/images/beijing-nearby/page-05.webp","assets/images/beijing-nearby/page-06.webp","assets/images/beijing-nearby/page-07.webp","assets/images/beijing-nearby/page-08.webp","assets/images/beijing-nearby/page-09.webp","assets/images/beijing-nearby/page-10.webp","assets/images/beijing-nearby/page-11.webp","assets/images/beijing-nearby/page-12.webp","assets/images/beijing-nearby/page-13.webp","assets/images/beijing-nearby/page-14.webp","assets/images/beijing-nearby/page-15.webp","assets/images/beijing-nearby/page-16.webp","assets/images/beijing-nearby/page-17.webp","assets/images/beijing-nearby/page-18.webp","assets/images/beijing-nearby/page-19.webp","assets/images/beijing-nearby/page-20.webp","assets/images/beijing-nearby/page-21.webp","assets/images/beijing-nearby/page-22.webp","assets/images/beijing-nearby/page-23.webp","assets/images/beijing-nearby/page-24.webp","assets/images/beijing-nearby/page-25.webp","assets/images/beijing-nearby/page-26.webp","assets/images/beijing-nearby/page-27.webp","assets/images/beijing-nearby/page-28.webp"])]},
  pencil:{t:"手绘与插画",s:"一句话介绍这个分类。",i:[P("作品名称一","2025","这里写创作想法或使用的材料。"),P("作品名称二","2024","这里写创作想法。"),P("作品名称三","2023","这里写创作想法。")]},
  laptop:{t:"咨询项目 Consulting",s:"",i:[P("## 城市数据分析咨询报告 Urban Data Analytics Reports","","一句话介绍这一类。"),P("共享电单车对城市居民生活方式的影响以及对城市绿色出行的作用研究——以昆明为例","2022–2023 · 能源基金会","2023 年，在能源基金会支持下，北京城市象限完成了本项目研究。项目分析昆明共享电单车的发展历程与出行现状，从城市尺度量化评估其对居民生活方式的影响，以及市场增长背后的公众需求；系统梳理昆明及其他典型城市的管理与运营经验，提出全生命周期场景还原与场景建议；并围绕交通结构、公众认知、城市治理和低碳目标四个定位，提出政策建议。\n\n研究为政策制定者与城市管理者提供是否投放、如何治理的参考，也引导公众思考共享电单车如何影响城市生活，让讨论跳出支持或反对的二元视角。\n\n**完整报告 Full Report**\n[完整报告（PDF，约 16 MB）](assets/documents/kunming-shared-ebikes-report-2023.pdf)\n\n**活动回顾 Events**\n[4·12活动回顾 | 共享电单车出行研究项目研讨沙龙](https://mp.weixin.qq.com/s/odoUB_2NdRfv1fBcJBm3Cw)\n[1·7活动回顾 | 停车场Party——共享电单车骑行主题戏剧工作坊](https://mp.weixin.qq.com/s/0D4FLU7IDXLAH8TMQ8Lkhg)\n\n**媒体报道 Media**\n[澎湃市政厅 实务者言｜对待“电单车”和“共享电单车”，城市当如何施策](https://mp.weixin.qq.com/s/IHNOdDUntpIw1D0DSGZxLQ)",["assets/images/kunming/slide-01.png","assets/images/kunming/slide-02.png","assets/images/kunming/slide-03.png","assets/images/kunming/slide-04.png","assets/images/kunming/slide-05.png","assets/images/kunming/slide-06.png","assets/images/kunming/slide-07.png","assets/images/kunming/slide-08.png","assets/images/kunming/slide-09.png","assets/images/kunming/slide-10.png"]),P("朝阳区国际人才社区研究项目","2021–2022 · 北京市朝阳区高层次人才中心","随着朝阳区国际人才的不断集聚，人才对优质的生活和发展环境的需求更加多元，对于城市空间更新和社会治理公众参与的要求不断提升，因此国际人才社区的建设工作亟需升级。区委组织部联合北京社区研究中心开展了专项课题研究，通过借鉴国内外优秀建设案例经验，构建国际人才社区顶层规划设计评估方法，调研诊断望京、将台、来广营、东坝等望京国际人才社区核心建设区域的建设现状，提出将望京试点辐射朝阳区的国际人才发展规划思路与实践路径建议。基于该专项研究课题成果，朝阳区国际人才社区科学遴选试点项目，组织实践新一轮的朝阳区人才社区试点项目建设。",["assets/images/chaoyang-talent/page-1.png","assets/images/chaoyang-talent/page-2.png","assets/images/chaoyang-talent/page-3.png","assets/images/chaoyang-talent/page-4.png","assets/images/chaoyang-talent/page-5.png","assets/images/chaoyang-talent/page-6.png","assets/images/chaoyang-talent/page-7.png","assets/images/chaoyang-talent/page-8.png"]),P("温江区零售药店网点空间布局规划及培育发展指引","2022 · 成都市温江区市场监督管理局","为贯彻落实《成都市温江区推行“证照分离”改革全覆盖进一步激发市场主体发展活力实施方案》要求，积极稳妥推进审批制度改革，根据区政府常务会会议精神，既要加强后端监管执法严防风险隐患，又要加强行业前端规划完善公服配套，在借鉴《上海市药品零售网点空间布局指引》基础上，结合温江区零售药店空间分布特征、大健康产业、药品安全监管、疫情防控等各方面实际情况，区市场监管局基于对温江区零售药店网点空间布局的大数据分析与应用，现提出温江区零售药店布局规划指引，引导温江区零售药店布局高质量有序发展，满足人民日益增长的用药和购药需求。\n\n本次研究范围首先以温江区管辖的96个（村）社区为基本单元，分析现有零售药店宏观布局。其次，以小区（院落）15分钟生活圈为分析单元，对各生活圈内的零售药店数量和可达性进行分析，并以此为依据提供药店规划指引和布局。响应上位规划对社区生活圈公共服务设施供给要求，本次研究涉及全区783个小区（院落）15分钟步行圈。最终，为了更进一步提供准确、精细化的药店规划指引，研究将空间尺度细化到以50m为半径的栅格地块单元，便于后续药店的精准选址和布局。",["assets/images/wenjiang-pharmacy/page-01.webp","assets/images/wenjiang-pharmacy/page-02.webp","assets/images/wenjiang-pharmacy/page-03.webp","assets/images/wenjiang-pharmacy/page-04.webp","assets/images/wenjiang-pharmacy/page-05.webp","assets/images/wenjiang-pharmacy/page-06.webp","assets/images/wenjiang-pharmacy/page-07.webp","assets/images/wenjiang-pharmacy/page-08.webp","assets/images/wenjiang-pharmacy/page-09.webp","assets/images/wenjiang-pharmacy/page-10.webp","assets/images/wenjiang-pharmacy/page-11.webp","assets/images/wenjiang-pharmacy/page-12.webp","assets/images/wenjiang-pharmacy/page-13.webp","assets/images/wenjiang-pharmacy/page-14.webp","assets/images/wenjiang-pharmacy/page-15.webp","assets/images/wenjiang-pharmacy/page-16.webp","assets/images/wenjiang-pharmacy/page-17.webp","assets/images/wenjiang-pharmacy/page-18.webp","assets/images/wenjiang-pharmacy/page-19.webp","assets/images/wenjiang-pharmacy/page-20.webp","assets/images/wenjiang-pharmacy/page-21.webp"]),P("## 城市更新循证设计与公众参与 Evidence-Based Urban Renewal & Public Participation","","一句话介绍这一类。"),P("安定门地铁站新增出入口城市设计循证优化研究","2021 · 北京城建院","地铁2号线安定门站建成于1981年，原规划设置4座出入口。因拆迁困难，西南出入口及东南出入口只修建到人防段后即决定缓建剩余部分。该地于2006年完成拆迁，建成了北二环城市公园。为方便安定门东、西大街道路南侧的乘客乘坐地铁，故拟建东南、西南出入口工程。\n\n在安定门站出入口外部北侧的安定门桥区作为北二环立交之一是北京重要的道路交通节点，目前早晚高峰时间道路比较拥堵。目前地铁出站客流频繁穿行地面辅路，与机动车形成一定的相互干扰，特别是右转车辆与过街行人之间的矛盾较大，且右转车辆不受信号控制，给乘客过街带来一定不便和安全隐患。新建南侧出入口解决了南侧乘客进出站的问题，实现建设之初四个口的规划，该项目是市交通委第三批消隐改造项目，并得到市政府的批复。我们作为公众参与循证研究设计单位，配合安定门站改造设计北京城建院进行项目论证分析。",["assets/images/andingmen-station/page-01.webp","assets/images/andingmen-station/page-02.webp","assets/images/andingmen-station/page-03.webp","assets/images/andingmen-station/page-04.webp","assets/images/andingmen-station/page-05.webp","assets/images/andingmen-station/page-06.webp","assets/images/andingmen-station/page-08.webp","assets/images/andingmen-station/page-11.webp","assets/images/andingmen-station/page-12.webp","assets/images/andingmen-station/page-13.webp","assets/images/andingmen-station/page-14.webp","assets/images/andingmen-station/page-15.webp","assets/images/andingmen-station/page-16.webp","assets/images/andingmen-station/page-17.webp","assets/images/andingmen-station/page-18.webp","assets/images/andingmen-station/page-19.webp","assets/images/andingmen-station/page-20.webp","assets/images/andingmen-station/page-21.webp","assets/images/andingmen-station/page-22.webp","assets/images/andingmen-station/page-23.webp","assets/images/andingmen-station/page-24.webp","assets/images/andingmen-station/page-25.webp"]),P("百子园社区公共空间改造","2022 · 朝阳区双井街道","项目位于北京市朝阳区双井街道后现代城 B 区，改造对象为社区南侧廊架及周边公共空间。场地连接居住、商业和社区道路等多种功能空间，长期存在快递及外卖车辆与行人流线混杂、非机动车停放无序、休憩设施不足、铺装破损和绿化缺乏维护等问题，影响了社区公共空间的安全性与使用品质。\n\n项目以循证设计和公众参与为核心方法，通过场地观察、行为记录、环境传感器监测、线上意见征集、实地访谈及居民设计工作坊，识别不同使用群体的空间需求。研究累计收集约 200 条居民与商户建议，访谈超过 120 位场地使用者，并邀请居民、商户、物业及专业设计团队共同讨论更新策略。在有限的建设预算下，方案通过优化步行流线、更新透水铺装、增设休憩座椅与花箱、改善绿化景观等微更新措施，探索以多方协商和渐进式改造提升社区公共空间品质的实践路径。",["assets/images/baiziyuan-community/page-01.webp","assets/images/baiziyuan-community/page-02.webp","assets/images/baiziyuan-community/page-03.webp","assets/images/baiziyuan-community/page-04.webp","assets/images/baiziyuan-community/page-05.webp","assets/images/baiziyuan-community/page-06.webp","assets/images/baiziyuan-community/page-07.webp","assets/images/baiziyuan-community/page-08.webp","assets/images/baiziyuan-community/page-09.webp","assets/images/baiziyuan-community/page-10.webp","assets/images/baiziyuan-community/page-11.webp","assets/images/baiziyuan-community/page-12.webp","assets/images/baiziyuan-community/page-13.webp","assets/images/baiziyuan-community/page-14.webp","assets/images/baiziyuan-community/page-15.webp","assets/images/baiziyuan-community/page-16.webp","assets/images/baiziyuan-community/page-17.webp","assets/images/baiziyuan-community/page-18.webp","assets/images/baiziyuan-community/page-19.webp","assets/images/baiziyuan-community/page-20.webp","assets/images/baiziyuan-community/page-21.webp","assets/images/baiziyuan-community/page-22.webp"]),P("国际可持续发展社区双井成果案例集","2022 · 中国城市和小城镇改革发展中心","《国际可持续发展社区双井成果案例集》由联合国人居署与中国城市和小城镇改革发展中心于2022年发布，以北京市朝阳区双井街道为研究对象，系统梳理联合国可持续发展目标11（可持续城市和社区）在基层社区的本土化实践。\n\n项目基于双井街道可持续发展大数据评估及行动计划，围绕公共服务、绿色交通、公众参与、社区文化、城市韧性、环境治理和公共空间七个维度，梳理具有代表性的社区建设与治理案例，呈现双井以“13社区”为平台、以“共建、共治、共享”为理念，推动社区共同体建设与精细化治理的实践路径。\n\n研究通过案例资料整理、政策与实践分析及图文可视化表达，总结双井在社区生活圈建设、多元协商治理、数字化管理和公共空间微更新等方面的经验，为可持续发展目标在中国城市基层社区的落实提供实践参考。\n\n**公开报告**\n[联合国官网 · International Sustainable Community Achievement Case Collection of Shuangjing](https://china.un.org/en/246278-international-sustainable-community-achievement-case-collection-shuanjing-beijing-china)",["assets/images/shuangjing-sdg-cover.webp"])]},
  booklet:{t:"小册子 Zines",s:"一句话介绍这个分类。",i:[P("出版物一","2025","这里写内容简介。"),P("出版物二","2024","这里写内容简介。"),P("出版物三","2023","这里写内容简介。")]},
- access:{t:"无障碍与包容 Accessibility & Inclusion",s:"",i:[P("北京低碳交通视角下的轮椅出行无障碍环境建设研究","2024 · 能源基金会支持 · 北京城市象限科技有限公司","聚焦北京下肢功能障碍为主的轮椅使用者，对其出行方式和出行工具进行研究，通过出行日志的方式记录并阐释轮椅出行的需求与偏好。同时，论证轮椅出行所面临的现实困境假设，并且从出行保障、道路通行安全、出入公共空间、使用公共交通、标准规范和无障碍设施改造，认知分析当前轮椅出行问题。\n\n同时，分析出行问题产生的原因，并提出在轮椅出行视角下的无障碍环境提升改善建议，包含轮椅使用者的出行共识构建、出台轮椅车头行业标准、优化无障碍设施设计标准与试点无障碍友好基础设施、公众参与共建无障碍出行。同时，探索性地倡导公众参与无障碍环境改造设计工作坊，以具体案例来分析当前公共空间无障碍环境改造的挑战与可能性。\n\n最后，本研究通过多利益相关方讨论共建的方式制作轮椅出行无障碍环境提案工具包，希望能够促进更多的公众、空间运营者、企业机构、地方政府等参与无障碍环境建设行动。\n\n**完整报告 Full Report**\n[完整报告（PDF，约 18 MB）](assets/documents/wheelchair-full-report-2024.pdf)\n\n**学术论文 Paper**\n陈琪玲，韩亚楠，周梓艾，茅明睿. (2024). 城市道路无障碍环境轮椅使用者出行偏好与适应性道路改善策略研究. 景观建筑学, 12(4): 26-45.\n[DOI: 10.15302/J-LAF-1-020100](https://doi.org/10.15302/J-LAF-1-020100)\n[出版社推介文章](https://mp.weixin.qq.com/s/a0O6ElGKG_WI2LhJX6klIQ)\n\n**工作坊 Workshops**\n[「感知障碍，理解障碍」Mapping 工作坊](https://mp.weixin.qq.com/s/fxOt18nj5NWfX-EoPBTrTQ)\n[无障碍环境建设跨界对谈工作坊](https://mp.weixin.qq.com/s/gxexpIL0VWr1JiCGDXlINA)\n\n**媒体报道与播客 Media**\n[财新 视线｜坐轮椅的人越来越多，我们的城市做好准备了吗？](https://photos.caixin.com/2024-06-26/102209924.html)\n[澎湃新闻 人物｜出门的权利](https://m.thepaper.cn/newsDetail_forward_28412122)\n[凤凰网 公益｜一场调查背后的926条数据：乘轮椅出门，难在哪儿？](https://i.ifeng.com/c/8cCY6fBs4tC)\n[小宇宙二维吾码播客 当我们老了，能坐轮椅上二环吗？](https://www.xiaoyuzhoufm.com/episode/654098613f3d65f06a7e0483?s=eyJ1IjoiNjAzNjE0YWRlMGY1ZTcyM2JiNzZhMjgxIiwiZCI6Mn0%3D)\n[单向街书店视频号｜张辰和坡道斗争的一年](https://mp.weixin.qq.com/s/dICKWG2KG6IgfEUfSC0Bqg)",["assets/images/wheelchair/page-01.png","assets/images/wheelchair/page-02.png","assets/images/wheelchair/page-03.png","assets/images/wheelchair/page-04.png","assets/images/wheelchair/page-05.png","assets/images/wheelchair/page-06.png","assets/images/wheelchair/page-07.png","assets/images/wheelchair/page-08.png","assets/images/wheelchair/page-09.png","assets/images/wheelchair/page-10.png","assets/images/wheelchair/page-11.png","assets/images/wheelchair/page-12.png","assets/images/wheelchair/page-13.png","assets/images/wheelchair/page-14.png","assets/images/wheelchair/page-15.png","assets/images/wheelchair/page-16.png","assets/images/wheelchair/page-17.png","assets/images/wheelchair/page-18.png","assets/images/wheelchair/page-19.png","assets/images/wheelchair/page-20.png","assets/images/wheelchair/page-21.png","assets/images/wheelchair/page-22.png"]),P("无障碍电影讲述人项目","2025 · 跳海酒馆","跳海联合「北京市红丹丹视障文化服务中心」与「那伽树」无障碍空间，组织招募并培训无障碍电影讲述人，并在跳海酒馆线下空间组织无障碍电影展，通过触摸、遮挡、发声与讲述，邀请每一个走进酒馆的人，尝试用手“看”电影，用耳朵“进入”画面。\n\n**相关链接**\n[无障碍电影讲述人报名：把电影讲给看不见的人听](https://mp.weixin.qq.com/s/9ivecty_IBM63DyUbeP9Gw)\n[泡泡纸和无障碍电影展：每个人都可以口述一分钟电影](https://mp.weixin.qq.com/s/LnrPM8qi4Y21P_WPZ7H8UQ)",["assets/images/accessibility-film.gif"]),P("跳海无障碍酒馆项目","2024–2025 · 跳海酒馆","跳海无障碍酒馆项目由 vien 和 70 共同在跳海发起，跳海与朋友们倡导所有人帮助所有人，提供开放包容的空间体验。\n\n希望和朋友们传递更多无障碍信息和残障融合的认识，启发他人也鞭策自己起身行动，使每个生活在这世界上的人都能多多走出房间，使个人在各种情境下被优待或被拒绝的概率靠近均值。\n\n**相关链接**\n[北京跳海无障碍打开方式](https://mp.weixin.qq.com/s/QZTdE-WkAPJgTiNNIRp3Bw)\n[无障碍主题贺卡](https://weixin.qq.com/sph/AzArHm7Cse)",["assets/images/tiaohai-accessibility-hand.webp","assets/images/tiaohai-accessibility-guide.webp"])]},
+ access:{t:"无障碍与包容 Accessibility & Inclusion",s:"",i:[P("北京低碳交通视角下的轮椅出行无障碍环境建设研究","2024 · 能源基金会支持 · 北京城市象限科技有限公司","本研究聚焦北京轮椅使用者的日常出行，通过问卷、出行日志与实地观察，了解不同轮椅及辅助设备的使用方式、出行需求和障碍，重点关注道路通行安全、公共交通接驳与公共空间出入。\n\n研究结合多方讨论与公众参与工作坊，提出轮椅出行路权保障、设施优化及相关标准完善建议，并制作无障碍环境提案工具包，推动使用者、社区与专业机构共同参与改善。\n\n**完整报告 Full Report**\n[完整报告（PDF，约 18 MB）](assets/documents/wheelchair-full-report-2024.pdf)\n\n**学术论文 Paper**\n陈琪玲，韩亚楠，周梓艾，茅明睿. (2024). 城市道路无障碍环境轮椅使用者出行偏好与适应性道路改善策略研究. 景观建筑学, 12(4): 26-45.\n[DOI: 10.15302/J-LAF-1-020100](https://doi.org/10.15302/J-LAF-1-020100)\n[出版社推介文章](https://mp.weixin.qq.com/s/a0O6ElGKG_WI2LhJX6klIQ)\n\n**工作坊 Workshops**\n[「感知障碍，理解障碍」Mapping 工作坊](https://mp.weixin.qq.com/s/fxOt18nj5NWfX-EoPBTrTQ)\n[无障碍环境建设跨界对谈工作坊](https://mp.weixin.qq.com/s/gxexpIL0VWr1JiCGDXlINA)\n\n**媒体报道与播客 Media**\n[财新 视线｜坐轮椅的人越来越多，我们的城市做好准备了吗？](https://photos.caixin.com/2024-06-26/102209924.html)\n[澎湃新闻 人物｜出门的权利](https://m.thepaper.cn/newsDetail_forward_28412122)\n[凤凰网 公益｜一场调查背后的926条数据：乘轮椅出门，难在哪儿？](https://i.ifeng.com/c/8cCY6fBs4tC)\n[小宇宙二维吾码播客 当我们老了，能坐轮椅上二环吗？](https://www.xiaoyuzhoufm.com/episode/654098613f3d65f06a7e0483?s=eyJ1IjoiNjAzNjE0YWRlMGY1ZTcyM2JiNzZhMjgxIiwiZCI6Mn0%3D)\n[单向街书店视频号｜张辰和坡道斗争的一年](https://mp.weixin.qq.com/s/dICKWG2KG6IgfEUfSC0Bqg)",["assets/images/wheelchair/page-01.png","assets/images/wheelchair/page-02.png","assets/images/wheelchair/page-03.png","assets/images/wheelchair/page-04.png","assets/images/wheelchair/page-05.png","assets/images/wheelchair/page-06.png","assets/images/wheelchair/page-07.png","assets/images/wheelchair/page-08.png","assets/images/wheelchair/page-09.png","assets/images/wheelchair/page-10.png","assets/images/wheelchair/page-11.png","assets/images/wheelchair/page-12.png","assets/images/wheelchair/page-13.png","assets/images/wheelchair/page-14.png","assets/images/wheelchair/page-15.png","assets/images/wheelchair/page-16.png","assets/images/wheelchair/page-17.png","assets/images/wheelchair/page-18.png","assets/images/wheelchair/page-19.png","assets/images/wheelchair/page-20.png","assets/images/wheelchair/page-21.png","assets/images/wheelchair/page-22.png"]),P("无障碍电影讲述人项目","2025 · 跳海酒馆","跳海联合「北京市红丹丹视障文化服务中心」与「那伽树」无障碍空间，组织招募并培训无障碍电影讲述人，并在跳海酒馆线下空间组织无障碍电影展，通过触摸、遮挡、发声与讲述，邀请每一个走进酒馆的人，尝试用手“看”电影，用耳朵“进入”画面。\n\n**相关链接**\n[无障碍电影讲述人报名：把电影讲给看不见的人听](https://mp.weixin.qq.com/s/9ivecty_IBM63DyUbeP9Gw)\n[泡泡纸和无障碍电影展：每个人都可以口述一分钟电影](https://mp.weixin.qq.com/s/LnrPM8qi4Y21P_WPZ7H8UQ)",["assets/images/accessibility-film.gif"]),P("跳海无障碍酒馆项目","2024–2025 · 跳海酒馆","跳海无障碍酒馆项目由 vien 和 70 共同在跳海发起，跳海与朋友们倡导所有人帮助所有人，提供开放包容的空间体验。\n\n希望和朋友们传递更多无障碍信息和残障融合的认识，启发他人也鞭策自己起身行动，使每个生活在这世界上的人都能多多走出房间，使个人在各种情境下被优待或被拒绝的概率靠近均值。\n\n**相关链接**\n[北京跳海无障碍打开方式](https://mp.weixin.qq.com/s/QZTdE-WkAPJgTiNNIRp3Bw)\n[无障碍主题贺卡](https://weixin.qq.com/sph/AzArHm7Cse)",["assets/images/tiaohai-accessibility-guide.webp","assets/images/tiaohai-accessibility-hand.webp"])]},
  about:{t:"关于我 About",s:"陈琪玲 Qiling Chen · 大家叫我 70",i:[P("我是谁 Who I am","","一个喜欢在街上散步的人，从脚边微不足道的日常事物中学习并获得生活的趣味。"),P("现在在做 Now","10/2024 至今 · 自由职业","**悦尔公益基金会无障碍项目咨询**\n酒店无障碍服务标准等咨询项目，策划组织残障者参与调研，完成数据分析、报告撰写、培训、空间改造与服务标准落地。\n\n**业余散步小组联合发起人**\n策划残障融合、摄影、户外、观鸟、游戏、路上观察等主题的城市散步；与乐平公益基金会、小红书户外薯、朝阳文旅、有趣创作者等合作，设计散步指南与工具包，运营散步社群。\n\n**城市设计咨询与地图设计**\n与设计院合作做乡村振兴、地方运营、社区营造项目的调研与策略；与社区运营组织完成城市社区人文地图，关注地方记忆与社会包容。"),P("经历 Experience","","10/2024–05/2025　跳海无障碍酒馆项目联合发起人（兼职），跳海酒馆\n03/2021–06/2024　城市分析师，北京城市象限科技有限公司\n03/2022–2024　项目经理（兼职），北京社区研究中心\n10/2020–12/2020　城市设计助理（实习），成都市规划设计研究院\n02/2019–05/2019　研究专员，宋玮建筑工作室（SWA）"),P("教育背景 Education","","2019–2020　跨学科城市设计研究型硕士，伦敦巴特莱特学院\n2015–2018　风景园林硕士，重庆大学\n2011–2015　风景园林学士，四川农业大学"),P("发表 Publications","期刊 · 会议 · 报告","**期刊杂志 Journals**\n毛华松, 陈琪玲, 杜春兰. (2017). “由情入理”——基于原型认知的中国园林史教学模式研究. 中国园林(04), 63-67.\n陈琪玲, 毛华松. (2018). 基于移民社会关系演化分析的巴蜀村镇文化空间特征研究. 风景园林(01), 95-100.\n茅明睿, 贺俊堯, 韩亚楠, 陈琪玲. (2022). 面向城市数字化转型的“设计”. 世界建筑(11), 30-31.\n茅明睿, 陈琪玲, 李大勇, 王元汉, 李骁然. (2023). 基于游戏和元宇宙技术的城市研究与空间干预探索. 城市环境设计(04), 296-299.\n陈琪玲, 韩亚楠, 周梓艾, 茅明睿. (2024). 城市道路无障碍环境轮椅使用者出行偏好与适应性道路改善策略研究. 景观建筑学(04), 26-45.\n\n**会议论文 Conference Papers**\n陈琪玲, 毛华松. (2017). 基于活态保护的三峡库区迁建文物古迹空间干预研究. 中国风景园林学会2017年会论文集 (pp.469-475). 重庆大学建筑城规学院; 山地城镇建设与新技术教育部重点实验室.\n陈琪玲. (2016). 响应自然特征的瑞典地域性景观营建思想及途径解析. 中国风景园林学会2016年会论文集 (pp.216-222). 重庆大学建筑城规学院.\n\n**国际报告 Reports**\n联合国人居署和国家发改委城市和小城镇改革发展中心. (2023). 国际可持续发展社区双井成果案例集.\n北京城市象限科技有限公司. (2023). 共享电单车对城市居民生活方式的影响以及对城市绿色出行作用的研究.（能源基金会支持）\n北京城市象限科技有限公司. (2024). 北京低碳出行视角下的轮椅出行无障碍环境建设研究.（审核公开中，能源基金会支持）"),P("所获奖励 Awards","","2020　伦敦大学优秀硕士毕业论文\n2019　重庆市优秀硕士学位论文\n2018　重庆大学优秀硕士毕业生；重庆大学 2018 年度优秀硕士学位论文\n2016–2017　夏义明风景园林教育基金奖学金\n2015、2016　重庆大学建筑城规学院研究生 A 等奖学金\n2012、2013　四川农业大学学年度必修课平均分成绩居同年级同专业前 5% 奖学金"),P("技能 Skills","","语言：英语（雅思 6.5，大学英语六级），汉语普通话（母语）\n数据分析：QGIS、空间句法分析（Depthmap）、Tableau、SPSS、Excel\n绘图建模：SketchUp、Rhino、Blender、Illustrator、InDesign、Photoshop、AutoCAD"),P("联系我 Contact","","邮箱　walkwalk7070@outlook.com\n小红书　@7070")]},
  walkers:{t:"业余散步小组 The Informal Walkers",s:"一句话介绍这个小组。",i:[P("活动名称一","2025 · 地点","这里写散步的路线、主题或发生的故事。"),P("活动名称二","2024 · 地点","这里写散步的路线、主题。"),P("活动名称三","2023 · 地点","这里写散步的路线、主题。")]},
  people:{t:"民间好人观察 Notes on Everyday Good People",s:"一句话介绍这个分类。",i:[P("观察一","2025 · 地点","这里写你遇到的人和事。"),P("观察二","2024 · 地点","这里写你遇到的人和事。"),P("观察三","2023 · 地点","这里写你遇到的人和事。")]}
@@ -130,22 +212,82 @@ function imageMarkup(url){
 }
 
 function fmt(t){return esc(t).replace(/!\[\]\((\/_blob\/[0-9a-f]+)\)/g,'<span class="asset-missing">原项目图片待补充</span>').replace(/\[([^\]]+)\]\(\/_blob\/[0-9a-f]+\)/g,'<span class="asset-missing document-missing">$1（原 PDF 待补充）</span>').replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+|\/_blob\/[0-9a-f]+|assets\/documents\/[A-Za-z0-9._-]+)\)|(https?:\/\/[^\s<]+?)(?=[（）]|\s|$)/g,function(m,a,u,b){var h=u||b;return '<a href="'+h+'" target="_blank" rel="noopener"'+(h.indexOf("/_blob/")==0?' class="dl" data-f="'+(FN[h.slice(7)]||"file.pdf")+'"':"")+'>'+(a||h)+'</a>'})}
+function researchDescription(t,groupLinks){
+  if(!groupLinks)return '<p>'+fmt(t)+'</p>';
+  var parts=t.split(/\n\n(?=\*\*[^*]+\*\*)/);
+  if(parts.length<2)return '<p>'+fmt(t)+'</p>';
+  var intro=parts.shift();
+  var groups=parts.map(function(part){
+    var match=part.match(/^\*\*([^*]+)\*\*\n?([\s\S]*)$/);
+    if(!match)return '<div class="reference-content">'+fmt(part)+'</div>';
+    return '<details><summary>'+esc(match[1])+'</summary><div class="reference-content">'+fmt(match[2])+'</div></details>';
+  }).join("");
+  return '<p>'+fmt(intro)+'</p><div class="reference-groups">'+groups+'</div>';
+}
 function esc(x){return String(x).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
 function route(){
   var k=location.hash.slice(1),d=D[k],home=document.getElementById("home"),v=document.getElementById("view");
   if(!d){home.hidden=false;v.hidden=true;document.title="陈琪玲 70 · 个人介绍与作品集";window.scrollTo(0,0);return}
   home.hidden=true;v.hidden=false;document.title=d.t+" · 作品集";
+  var editorial=(k==="booklet");v.classList.toggle("editorial",editorial);
+  var mappingAtlas=(k==="cube");v.classList.toggle("mapping-atlas",mappingAtlas);
+  var researchSplit=(k==="laptop"||k==="access");v.classList.toggle("research-split",researchSplit);
   document.getElementById("vt").textContent=d.t;
   document.getElementById("h").textContent=d.t;
   document.getElementById("s").textContent=d.s;
   document.getElementById("jump").innerHTML=d.i.map(function(x,n){return x[0].slice(0,3)==="## "?'<button data-t="sec'+n+'">'+esc(x[0].slice(3))+'</button>':""}).join("");
   document.getElementById("list").innerHTML=d.i.map(function(x,n){
+    if(researchSplit && x[0].slice(0,3)!=="## "){
+      var images=x[3]||[];
+      var gallery=images.length?'<div class="gal">'+images.map(function(u){return imageMarkup(u)}).join("")+'</div>':(k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">项目图片待添加</div>');
+      var controls=images.length>1?'<div class="gallery-controls"><button type="button" class="gallery-prev" aria-label="上一张图片">‹</button><span class="gallery-count" aria-live="polite">01 / '+String(images.length).padStart(2,"0")+'</span><button type="button" class="gallery-next" aria-label="下一张图片">›</button></div>':'';
+      return '<article><div class="research-mobile-heading"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'</div><div class="research-media">'+gallery+controls+'</div><div class="research-copy"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+researchDescription(x[2],k==='access'&&x[0].indexOf('轮椅出行无障碍环境建设研究')!==-1)+'</div></article>';
+    }
+    if(mappingAtlas){
+      var imgs=x[3]&&x[3].length?'<div class="mapping-images">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':'<div class="mapping-placeholder">作品图片待添加</div>';
+      return '<article class="mapping-work">'+imgs+'<div class="mapping-caption"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+(x[2]?'<p>'+fmt(x[2])+'</p>':'')+'</div></article>';
+    }
+    if(editorial){
+      var gallery=x[3]&&x[3].length?'<div class="editorial-gallery">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':'<div class="editorial-placeholder">作品图片待添加</div>';
+      return '<article class="editorial-project">'+gallery+'<div class="editorial-copy"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></div></article>';
+    }
     if(x[0].slice(0,3)==="## ")return '<div class="sec" id="sec'+n+'"><h2>'+esc(x[0].slice(3))+'</h2><p>'+fmt(x[2])+'</p></div>';
     return '<article>'+(x[3]?'<div class="gal'+((x[0].indexOf("温江区零售药店")===0||x[0].indexOf("安定门地铁站")===0||x[0].indexOf("百子园社区公共空间改造")===0)?' gal-wenjiang':'')+'">'+x[3].map(function(u){return imageMarkup(u)}).join("")+'</div>':k==="about"?"":'<div class="ph" role="img" aria-label="图片占位">图片 '+(n+1)+'（替换为你的作品）</div>')+'<h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'<p>'+fmt(x[2])+'</p></article>'}).join("");
   window.scrollTo(0,0);
 }
+function fitMobileGallery(g){
+  if(!g||!window.matchMedia("(max-width:760px)").matches)return;
+  var slides=g.querySelectorAll("img");if(!slides.length)return;
+  var n=Math.max(0,Math.min(slides.length-1,Math.round(g.scrollLeft/Math.max(1,g.clientWidth))));
+  var img=slides[n];
+  var setHeight=function(){
+    if(!img.naturalWidth||!img.naturalHeight)return;
+    var width=g.clientWidth;
+    if(width>0)g.style.height=Math.round(width*img.naturalHeight/img.naturalWidth)+"px";
+  };
+  if(img.complete)setHeight();else img.addEventListener("load",setHeight,{once:true});
+}
+function updateGalleryCounter(g){
+  if(!g)return;
+  var slides=g.querySelectorAll("img"),controls=g.parentElement.querySelector(".gallery-controls");
+  if(!controls||!slides.length)return;
+  var n=Math.max(0,Math.min(slides.length-1,Math.round(g.scrollLeft/Math.max(1,g.clientWidth))));
+  controls.querySelector(".gallery-count").textContent=String(n+1).padStart(2,"0")+" / "+String(slides.length).padStart(2,"0");
+  controls.querySelector(".gallery-prev").disabled=n===0;
+  controls.querySelector(".gallery-next").disabled=n===slides.length-1;
+  fitMobileGallery(g);
+}
+document.addEventListener("load",function(e){if(e.target&&e.target.matches&&e.target.matches(".research-media .gal img"))fitMobileGallery(e.target.parentElement)},true);
+document.addEventListener("scroll",function(e){if(e.target&&e.target.matches&&e.target.matches(".research-media .gal"))updateGalleryCounter(e.target)},true);
+document.addEventListener("click",function(e){
+  var b=e.target.closest&&e.target.closest(".gallery-controls button");if(!b)return;
+  var g=b.parentElement.parentElement.querySelector(".gal");if(!g)return;
+  var slides=g.querySelectorAll("img"),n=Math.round(g.scrollLeft/Math.max(1,g.clientWidth));
+  n=Math.max(0,Math.min(slides.length-1,n+(b.classList.contains("gallery-next")?1:-1)));
+  g.scrollTo({left:n*g.clientWidth,behavior:"smooth"});
+});
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("#jump button");if(!b)return;var t=document.getElementById(b.dataset.t);if(t)t.scrollIntoView({behavior:"smooth"})});
-addEventListener("hashchange",route);route();
+addEventListener("hashchange",route);addEventListener("resize",function(){document.querySelectorAll(".research-media .gal").forEach(function(g){if(!window.matchMedia("(max-width:760px)").matches)g.style.height="";else fitMobileGallery(g)})});route();
 </script>
 </body>
 </html>
