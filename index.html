@@ -265,13 +265,13 @@ function researchDescription(t,groupLinks){
 function esc(x){return String(x).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
 var originalMapping=D.cube.i.slice();
 var mappingGroups=[
- ['01 地图',[4,29,1,32,38]],
- ['02 物件图解',[5,6,8,9,10,11,12,13,14,17,18,19,20,22,37]],
- ['03 空间图解',[3,7,15,16,21,23,24,25,26,27,28,30,31,33,34,35,36]],
+ ['01 地图',[4,29,1]],
+ ['02 空间图解',[3,7,15,16,23,24,25,26,27,28,30,33,34,35,36,38]],
+ ['03 物件图解',[5,6,8,9,10,11,12,13,14,17,18,19,20,21,22,31,32,37]],
  ['04 信息图表',[0,2]]
 ];
 D.cube.i=mappingGroups.flatMap(function(g){return [["## "+g[0],"","",[]]].concat(g[1].map(function(n){return originalMapping[n]}))});
-D.cube.s="用地图、物件图解、空间图解与信息图表，记录观察，整理经验，连接城市与日常生活。";
+D.cube.s="用地图、空间图解、物件图解与信息图表，记录观察，整理经验，连接城市与日常生活。";
 function route(){
   var k=location.hash.slice(1),d=D[k],home=document.getElementById("home"),v=document.getElementById("view");
   if(!d){home.hidden=false;v.hidden=true;document.title="陈琪玲 70 · 个人介绍与作品集";window.scrollTo(0,0);return}
