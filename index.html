@@ -207,6 +207,14 @@ article p+p{margin-top:0}
  #view.mapping-atlas .mapping-compact .mapping-main:only-child{margin-bottom:0}
  #view.mapping-atlas .mapping-compact .mapping-main img{height:auto;max-height:none}
 }
+
+/* Responsive three-column diagram galleries */
+@media(min-width:1100px){
+ #view.mapping-atlas #list{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:30px}
+ #view.mapping-atlas .mapping-compact .mapping-main{height:300px}
+ #view.mapping-atlas .mapping-compact .mapping-caption h2{font-size:18px}
+ #view.mapping-atlas .mapping-compact .mapping-thumb{flex-basis:48px}
+}
 </style>
 </head>
 <body>
