@@ -296,7 +296,7 @@ var originalMapping=D.cube.i.slice();
 var mappingGroups=[
  ['01 地图',[4,29,1]],
  ['02 空间图解',[3,7,15,16,23,24,25,26,27,28,30,33,34,35,36,38]],
- ['03 物件图解',[5,6,8,9,10,11,12,13,14,17,18,19,20,21,22,31,32,37]],
+ ['03 物件图解',[17,18,31,5,6,8,9,10,11,12,13,14,19,20,21,22,32,37]],
  ['04 信息图表',[0,2]]
 ];
 D.cube.i=mappingGroups.flatMap(function(g){return [["## "+g[0],"","",[]]].concat(g[1].map(function(n){return originalMapping[n]}))});
