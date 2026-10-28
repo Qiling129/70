@@ -153,6 +153,39 @@ article p+p{margin-top:0}
 #view.mapping-atlas .mapping-caption{padding-top:4px}
 #view.mapping-atlas .mapping-thumb{width:53px;height:46px}
 }
+
+/* Mapping grouped continuous reading */
+#view.mapping-atlas .wrap{max-width:1160px;padding-inline:clamp(20px,5vw,72px)}
+#view.mapping-atlas .wrap>h1{margin-top:52px;font-size:clamp(30px,4vw,46px);letter-spacing:-1px}
+#view.mapping-atlas .sub{max-width:650px;font-size:15px;margin-top:12px}
+#view.mapping-atlas #jump{gap:0;margin:30px 0 32px;padding:14px 0;border-block:1px solid var(--line)}
+#view.mapping-atlas #jump button{border:0;border-radius:0;padding:6px 30px 6px 0;font-size:15px}
+#view.mapping-atlas #list{max-width:none}
+.mapping-section{padding:80px 0 24px;scroll-margin-top:70px;border-top:1px solid var(--fg);margin-top:70px}
+.mapping-section:first-child{margin-top:0;padding-top:32px;border-top:0}
+.mapping-section h2{display:flex;align-items:baseline;gap:24px;font-size:32px;font-weight:500;margin:0}
+.mapping-section h2 span{font-size:14px;color:var(--red);font-variant-numeric:tabular-nums}
+#view.mapping-atlas #list article.mapping-work{grid-template-columns:minmax(0,1fr) 220px;gap:48px;padding:34px 0 68px;border:0;margin-bottom:20px}
+#view.mapping-atlas .mapping-main{height:auto;min-height:260px;max-height:none;justify-content:flex-start}
+#view.mapping-atlas .mapping-main img{width:100%;height:auto;max-height:700px;object-fit:contain;object-position:left center}
+#view.mapping-atlas .mapping-caption{position:sticky;top:95px;padding-top:6px}
+#view.mapping-atlas .mapping-caption h2{font-size:20px;line-height:1.65}
+#view.mapping-atlas .mapping-caption .meta{margin-top:14px;font-size:13px}
+#view.mapping-atlas .mapping-thumbs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;gap:10px;margin-top:20px}
+#view.mapping-atlas .mapping-thumb{flex:0 0 58px;height:48px;opacity:.55}
+#view.mapping-atlas .mapping-thumb[aria-pressed=true]{opacity:1;border-color:var(--red)}
+@media(max-width:760px){
+#view.mapping-atlas #list article.mapping-work{display:flex;flex-direction:column;gap:16px;padding:22px 0 46px;margin:0}
+#view.mapping-atlas .mapping-caption{position:static;order:-1}
+#view.mapping-atlas .mapping-caption h2{font-size:19px}
+#view.mapping-atlas .mapping-caption .meta{margin:4px 0 0}
+#view.mapping-atlas .mapping-images{width:100%}
+#view.mapping-atlas .mapping-main{height:auto;min-height:0}
+#view.mapping-atlas .mapping-main img{max-height:none;height:auto}
+.mapping-section{padding:42px 0 12px;margin-top:30px}
+.mapping-section h2{font-size:27px;gap:16px}
+#view.mapping-atlas #jump button{font-size:13px;padding-right:18px}
+}
 </style>
 </head>
 <body>
@@ -230,6 +263,15 @@ function researchDescription(t,groupLinks){
   return '<p>'+fmt(intro)+'</p><div class="reference-groups">'+groups+'</div>';
 }
 function esc(x){return String(x).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+var originalMapping=D.cube.i.slice();
+var mappingGroups=[
+ ['01 地图',[4,29,1,32,38]],
+ ['02 物件图解',[5,6,8,9,10,11,12,13,14,17,18,19,20,22,37]],
+ ['03 空间图解',[3,7,15,16,21,23,24,25,26,27,28,30,31,33,34,35,36]],
+ ['04 信息图表',[0,2]]
+];
+D.cube.i=mappingGroups.flatMap(function(g){return [["## "+g[0],"","",[]]].concat(g[1].map(function(n){return originalMapping[n]}))});
+D.cube.s="用地图、物件图解、空间图解与信息图表，记录观察，整理经验，连接城市与日常生活。";
 function route(){
   var k=location.hash.slice(1),d=D[k],home=document.getElementById("home"),v=document.getElementById("view");
   if(!d){home.hidden=false;v.hidden=true;document.title="陈琪玲 70 · 个人介绍与作品集";window.scrollTo(0,0);return}
@@ -248,6 +290,7 @@ function route(){
       var controls=images.length>1?'<div class="gallery-controls"><button type="button" class="gallery-prev" aria-label="上一张图片">‹</button><span class="gallery-count" aria-live="polite">01 / '+String(images.length).padStart(2,"0")+'</span><button type="button" class="gallery-next" aria-label="下一张图片">›</button></div>':'';
       return '<article><div class="research-mobile-heading"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+'</div><div class="research-media">'+gallery+controls+'</div><div class="research-copy"><h2>'+esc(x[0])+'</h2>'+(x[1]?'<p class="meta">'+esc(x[1])+'</p>':'')+researchDescription(x[2],k==='access'&&x[0].indexOf('轮椅出行无障碍环境建设研究')!==-1)+'</div></article>';
     }
+    if(mappingAtlas && x[0].slice(0,3)==="## ")return '<div class="mapping-section" id="sec'+n+'"><h2><span>'+esc(x[0].slice(3,5))+'</span>'+esc(x[0].slice(6))+'</h2></div>';
     if(mappingAtlas){
       var mappingUrls=x[3]||[];
       var imgs=mappingUrls.length?'<div class="mapping-images"><a class="mapping-main" href="'+(mappingUrls[0].startsWith("assets/")?"/"+mappingUrls[0]:mappingUrls[0])+'" target="_blank" rel="noopener" title="打开完整图片">'+imageMarkup(mappingUrls[0])+'</a>'+(mappingUrls.length>1?'<div class="mapping-thumbs" aria-label="切换作品图片">'+mappingUrls.map(function(u,j){return '<button type="button" class="mapping-thumb" data-image="'+esc(u.startsWith("assets/")?"/"+u:u)+'" aria-pressed="'+(j===0?'true':'false')+'" aria-label="查看第 '+(j+1)+' 张图片">'+imageMarkup(u)+'</button>'}).join("")+'</div>':'')+'</div>':'<div class="mapping-placeholder">作品图片待添加</div>';
